@@ -21,7 +21,6 @@ limitations under the License.
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include "tensorflow/core/platform/logging.h"
 #include "tensorflow/lite/allocation.h"
 #include "tensorflow/lite/c/builtin_op_data.h"
 #include "tensorflow/lite/c/c_api_internal.h"
@@ -556,12 +555,6 @@ TfLiteStatus InterpreterBuilder::operator()(
         "than supported version %d.\n",
         model_->version(), TFLITE_SCHEMA_VERSION);
     return cleanup_and_error();
-  } else if (model_->version() < TFLITE_SCHEMA_VERSION) {
-    LOG(WARNING) << sprintf(
-        "Model provided is schema version %d, lower than "
-        "currently supported version %d."
-        "Ideally all changes will be backward compatible.\n",
-        model_->version(), TFLITE_SCHEMA_VERSION);
   }
 
   if (BuildLocalIndexToRegistrationMapping() != kTfLiteOk) {
